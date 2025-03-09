@@ -1,0 +1,9 @@
+@media (min-width: 768px) {
+    nav ul {
+        justify-content: space-around;
+    }
+
+    section {
+        max-width: 70%;
+    }
+}
