@@ -1,9 +1,31 @@
-@media (min-width: 768px) {
-    nav ul {
-        justify-content: space-around;
-    }
-
-    section {
-        max-width: 70%;
-    }
-}
+.hero-section {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .hero-section img {
+    width: 150px;            /* 🔥 Tamanho da "foto de perfil" */
+    height: 150px;
+    border-radius: 50%;      /* 🔥 Deixa a imagem redonda */
+    object-fit: cover;       /* 🔥 Garante que a imagem não distorça */
+    border: 3px solid #004080; /* 🔵 (Opcional) borda azul pra destacar */
+  }
+  
+  .hero-text {
+    margin-top: 1rem;
+  }
+  
+  .hero-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #004080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  

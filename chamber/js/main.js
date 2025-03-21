@@ -1,82 +1,79 @@
-// main.js
+// main.js for index.html
 
-// Função para buscar e exibir os dados dos membros
-async function loadMembers() {
-  try {
-      // O caminho "data/members.json" é relativo ao arquivo HTML (directory.html)
-      const response = await fetch('data/members.json');
-      if (!response.ok) {
-          throw new Error('HTTP error! status: ${response.status}');
-      }
-      const members = await response.json();
-      displayMembers(members);
-  } catch (error) {
-      console.error('Erro ao buscar os dados dos membros:', error);
-  }
+// Weather API
+const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+const city = 'Timbuktu'; // Adjust the city
+
+async function fetchWeatherData() {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);
+        const data = await response.json();
+        displayWeatherData(data);
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        document.getElementById('weather-data').innerHTML = '<p>Failed to load weather data.</p>';
+    }
 }
 
-// Função para criar os cartões dos membros e injetá-los no DOM
-function displayMembers(members) {
-  const container = document.getElementById('members-container');
-  container.innerHTML = ''; // Limpa o conteúdo existente
+function displayWeatherData(data) {
+    const weatherDiv = document.getElementById('weather-data');
+    if (!data || !data.list) {
+        weatherDiv.innerHTML = '<p>Weather data not available.</p>';
+        return;
+    }
 
-  // Verifica se 'members' é um array antes de iterar
-  if (!Array.isArray(members)) {
-      console.error('Os dados dos membros não estão em um formato de array.');
-      return;
-  }
+    const today = data.list[0];
+    const forecast = data.list.filter((item, index) => index % 8 === 0).slice(1, 4); // Get 3 days forecast
 
-  members.forEach(member => {
-      const card = document.createElement('div');
-      card.classList.add('member-card');
-
-      // Cria e adiciona a imagem do membro
-      const img = document.createElement('img');
-      img.src = images/${member.image}; // Certifique-se de que a pasta "images" está no mesmo nível do HTML
-      img.alt = member.name || 'Imagem do membro';
-      card.appendChild(img);
-
-      // Nome do membro
-      const name = document.createElement('h3');
-      name.textContent = member.name || 'Nome não informado';
-      card.appendChild(name);
-
-      // Endereço
-      const address = document.createElement('p');
-      address.textContent = member.address || 'Endereço não informado';
-      card.appendChild(address);
-
-      // Telefone
-      const phone = document.createElement('p');
-      phone.textContent = member.phone || 'Telefone não informado';
-      card.appendChild(phone);
-
-      // Link do site
-      const website = document.createElement('a');
-      website.href = member.website || '#';
-      website.textContent = 'Visitar Site';
-      website.target = '_blank';
-      card.appendChild(website);
-
-      // Nível de associação
-      const membership = document.createElement('p');
-      let levelText = '';
-      switch (member.membership) {
-          case 1:
-              levelText = 'Member';
-              break;
-          case 2:
-              levelText = 'Silver';
-              break;
-          case 3:
-              levelText = 'Gold';
-              break;
-          default:
-              levelText = 'Member';
-      }
-      membership.textContent = Membership: ${``levelText`};
-      card.appendChild(membership);
-
-      container.appendChild(card);
-  });
+    weatherDiv.innerHTML = `
+        <p>Current: ${today.main.temp}°C, ${today.weather[0].description}</p>
+        <h3>Forecast:</h3>
+        ${forecast.map(day => `<p>${new Date(day.dt * 1000).toLocaleDateString()}: ${day.main.temp}°C</p>`).join('')}
+    `;
 }
+
+// Spotlight Members
+async function loadSpotlights() {
+    try {
+        const response = await fetch('data/members.json');
+        const members = await response.json();
+        displaySpotlights(members);
+    } catch (error) {
+        console.error('Error loading members data:', error);
+        document.getElementById('spotlight-container').innerHTML = '<p>Failed to load member spotlights.</p>';
+    }
+}
+
+function displaySpotlights(members) {
+    const spotlightDiv = document.getElementById('spotlight-container');
+    const goldSilver = members.filter(member => member.membership === 2 || member.membership === 3);
+
+    if (goldSilver.length < 2) {
+        spotlightDiv.innerHTML = '<p>Not enough gold or silver members.</p>';
+        return;
+    }
+
+    const spotlights = [];
+    while (spotlights.length < 2 && goldSilver.length > 0) {
+        const randomIndex = Math.floor(Math.random() * goldSilver.length);
+        spotlights.push(goldSilver.splice(randomIndex, 1)[0]);
+    }
+
+    spotlightDiv.innerHTML = spotlights.map(member => `
+        <div class="spotlight-card">
+            <img src="images/${member.image}" alt="${member.name} logo">
+            <h3>${member.name}</h3>
+            <p>${member.address}</p>
+            <p>${member.phone}</p>
+            <a href="${member.website}" target="_blank">Website</a>
+            <p>Membership: ${member.membership === 3 ? 'Gold' : 'Silver'}</p>
+        </div>
+    `).join('');
+}
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    fetchWeatherData();
+    loadSpotlights();
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+});
