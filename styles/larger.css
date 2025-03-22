@@ -28,4 +28,34 @@
     text-decoration: none;
     border-radius: 5px;
   }
+  .hero-section {
+    text-align: center;
+    padding: 2rem;
+  }
   
+  .hero-section img {
+    width: 150px;            /* 🔥 Tamanho tipo perfil */
+    height: 150px;
+    border-radius: 50%;      /* 🔥 Deixa redonda */
+    object-fit: cover;       /* 🔥 Evita distorção */
+    border: 3px solid #004080; /* 🔵 Opcional: borda azul pra dar destaque */
+  }
+  
+  .hero-text {
+    margin-top: 1rem;
+  }
+  
+  .hero-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #004080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+    

@@ -1,0 +1,100 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #d0e4f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #2a5d87;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+header img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    background-color: yellow;
+    color: black;
+}
+
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+section {
+    background: white;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+}
+
+footer {
+    background-color: #2a5d87;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+footer p {
+    margin: 5px;
+}
+.hero-section {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .hero-section img {
+    width: 150px;            /* 🔥 Tamanho tipo perfil */
+    height: 150px;
+    border-radius: 50%;      /* 🔥 Deixa redonda */
+    object-fit: cover;       /* 🔥 Evita distorção */
+    border: 3px solid #004080; /* 🔵 Opcional: borda azul pra dar destaque */
+  }
+  
+  .hero-text {
+    margin-top: 1rem;
+  }
+  
+  .hero-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .cta-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #004080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
